@@ -350,6 +350,13 @@ namespace CrewLogApi.Controllers
 
                     yield break;
 
+                case "real_name":
+
+                    if (principal.HasScope(Scopes.Profile))
+                        yield return Destinations.IdentityToken;
+
+                    yield break;
+
                 case Claims.Email:
                     yield return Destinations.AccessToken;
 
