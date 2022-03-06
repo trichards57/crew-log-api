@@ -1,0 +1,37 @@
+﻿@using Microsoft.Extensions.Primitives
+
+@{
+    ViewData["Title"] = "Logout";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<main class="d-flex w-100">
+    <div class="container d-flex flex-column">
+        <div class="row vh-100">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <div class="d-table-cell align-middle">
+                    <div class="text-center mt-4">
+                        <h1 class="h2">Sign Out?</h1>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="m-sm-4 text-center">
+                                <form asp-controller="Authorization" asp-action="Logout" method="post">
+                                    @Html.AntiForgeryToken()
+                                    @foreach (var parameter in Context.Request.HasFormContentType ? (IEnumerable<KeyValuePair<string, StringValues>>)Context.Request.Form : Context.Request.Query)
+                                    {
+                                        <input type="hidden" name="@parameter.Key" value="@parameter.Value" />
+                                    }
+                                    <p class="card-text">Are you sure you want to sign out?</p>
+                                    <input class="btn btn-lg btn-success" name="Confirm" type="submit" value="Yes" />
+                                    <a class="btn btn-lg btn-secondary" href="~/">Go Back</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

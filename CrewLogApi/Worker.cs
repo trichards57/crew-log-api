@@ -25,7 +25,7 @@ namespace CrewLogApi
                 await manager.CreateAsync(new OpenIddictApplicationDescriptor
                 {
                     ClientId = "react-client",
-                    ConsentType = ConsentTypes.Explicit,
+                    ConsentType = ConsentTypes.Implicit,
                     DisplayName = "React Client Application",
                     Type = ClientTypes.Public,
                     PostLogoutRedirectUris =
@@ -51,7 +51,7 @@ namespace CrewLogApi
                     Requirements =
                 {
                     Requirements.Features.ProofKeyForCodeExchange
-                }
+                },
                 }, cancellationToken);
             }
         }
