@@ -30,11 +30,11 @@ namespace CrewLogApi
                     Type = ClientTypes.Public,
                     PostLogoutRedirectUris =
                 {
-                    new Uri("https://localhost:44310/authentication/logout-callback")
+                    new Uri("https://localhost:3000/authentication/logout-callback")
                 },
                     RedirectUris =
                 {
-                    new Uri("https://localhost:44310/authentication/login-callback")
+                    new Uri("https://localhost:3000/authentication/login-callback")
                 },
                     Permissions =
                 {
