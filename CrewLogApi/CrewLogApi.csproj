@@ -1,39 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-CrewLogApi-A32549D4-F475-4F93-9677-2878A5B0755A</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>aspnet-CrewLogApi-A32549D4-F475-4F93-9677-2878A5B0755A</UserSecretsId>
+		<SpaRoot>..\..\crew-log-ui\</SpaRoot>
+		<SpaClientUrl>https://localhost:3000/</SpaClientUrl>
+		<SpaLaunchCommand>npm start</SpaLaunchCommand>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="compilerconfig.json" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="AspNetCore.SpaYarp" Version="1.0.0-beta.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+		<PackageReference Include="OpenIddict.AspNetCore" Version="3.1.1" />
+		<PackageReference Include="OpenIddict.EntityFrameworkCore" Version="3.1.1" />
+		<PackageReference Include="OpenIddict.Quartz" Version="3.1.1" />
+		<PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="3.1.1" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="3.1.1" />
-	<PackageReference Include="OpenIddict.Quartz" Version="3.1.1" />
-	<PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Data\Migrations\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<None Include="compilerconfig.json" />
+	</ItemGroup>
 </Project>

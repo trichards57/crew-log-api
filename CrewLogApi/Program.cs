@@ -84,6 +84,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddSpaYarp();
+
 builder.Services.AddHostedService<Worker>();
 
 var app = builder.Build();
@@ -112,6 +114,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
+app.UseSpaYarp();
 app.MapFallbackToFile("index.html");
 
 app.Run();
