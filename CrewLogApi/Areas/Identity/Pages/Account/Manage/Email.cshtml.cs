@@ -140,15 +140,9 @@ namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (user == null || !ModelState.IsValid)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
+                return RedirectToPage("Index", new { state = "confirm-error" });
             }
 
             var userId = await _userManager.GetUserIdAsync(user);
@@ -166,7 +160,7 @@ namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             StatusMessage = "Verification email sent. Please check your email.";
-            return RedirectToPage();
+            return RedirectToPage("Index", new { state = "confirm-sent" });
         }
     }
 }

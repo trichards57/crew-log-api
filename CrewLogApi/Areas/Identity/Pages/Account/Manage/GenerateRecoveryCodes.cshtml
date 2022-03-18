@@ -5,23 +5,20 @@
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
-<div class="alert alert-warning" role="alert">
-    <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        <strong>Put these codes in a safe place.</strong>
-    </p>
-    <p>
-        If you lose your device and don't have the recovery codes you will lose access to your account.
-    </p>
-    <p>
-        Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
-        used in an authenticator app you should <a asp-page="./ResetAuthenticator">reset your authenticator keys.</a>
-    </p>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Get New Recovery Codes</h5>
+    </div>
+    <div class="card-body h-100">
+        <p>
+            <strong>If you continue, your previous recovery codes won't work anymore.</strong>
+            Make sure you get rid of them and keep these ones instead.
+        </p>
+        <div class="text-center">
+            <form method="post">
+                <button class="btn btn-danger" type="submit">Generate Recovery Codes</button>
+            </form>
+        </div>
+    </div>
 </div>
-<div>
-    <form method="post">
-        <button class="btn btn-danger" type="submit">Generate Recovery Codes</button>
-    </form>
-</div>
+

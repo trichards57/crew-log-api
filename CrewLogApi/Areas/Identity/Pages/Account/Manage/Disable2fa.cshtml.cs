@@ -2,20 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Threading.Tasks;
 using CrewLogApi.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
 {
     public class Disable2faModel : PageModel
     {
-        private readonly UserManager<User> _userManager;
         private readonly ILogger<Disable2faModel> _logger;
+        private readonly UserManager<User> _userManager;
 
         public Disable2faModel(
             UserManager<User> userManager,
@@ -24,13 +21,6 @@ namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _logger = logger;
         }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [TempData]
-        public string StatusMessage { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -62,9 +52,14 @@ namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
                 throw new InvalidOperationException($"Unexpected error occurred disabling 2FA.");
             }
 
+            var resetResult = await _userManager.ResetAuthenticatorKeyAsync(user);
+            if (!resetResult.Succeeded)
+            {
+                throw new InvalidOperationException($"Unexpected error occurred reseting 2FA.");
+            }
+
             _logger.LogInformation("User with ID '{UserId}' has disabled 2fa.", _userManager.GetUserId(User));
-            StatusMessage = "2fa has been disabled. You can reenable 2fa when you setup an authenticator app";
-            return RedirectToPage("./TwoFactorAuthentication");
+            return RedirectToPage("./Index");
         }
     }
 }

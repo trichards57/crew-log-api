@@ -5,21 +5,27 @@
     ViewData["ActivePage"] = "TwoFactorAuthentication";
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>Put these codes in a safe place.</strong>
-    </p>
-    <p>
-        If you lose your device and don't have the recovery codes you will lose access to your account.
-    </p>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        @for (var row = 0; row < Model.RecoveryCodes.Length; row += 2)
-        {
-            <code class="recovery-code">@Model.RecoveryCodes[row]</code><text>&nbsp;</text><code class="recovery-code">@Model.RecoveryCodes[row + 1]</code><br />
-        }
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Recovery Codes</h5>
+    </div>
+    <div class="card-body h-100">
+        These are your recovery codes.  If you lose your device, you'll need them to get back in
+        to your account.  Make sure you keep them in a safe place.  You won't be able to download
+        these codes again, though you can always get new ones while you have access to your account.
+        <div class="row justify-content-center">
+            <div class="col-auto fs-4">
+                @for (var row = 0; row < Model.RecoveryCodes.Length; row += 2)
+                {
+                    <code class="recovery-code">@Model.RecoveryCodes[row]</code>
+
+                    <text>&nbsp;</text>
+
+                    <code class="recovery-code">@Model.RecoveryCodes[row + 1]</code>
+
+                    <br />
+                }
+            </div>
+        </div>
     </div>
 </div>

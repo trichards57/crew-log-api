@@ -35,10 +35,10 @@ function initializeSidebarCollapse() {
     if (sidebarElement && sidebarToggleElement) {
         sidebarToggleElement.addEventListener("click", () => {
             sidebarElement.classList.toggle("collapsed");
+        });
 
-            sidebarElement.addEventListener("transitionend", () => {
-                window.dispatchEvent(new Event("resize"));
-            });
+        sidebarElement.addEventListener("transitionend", () => {
+            window.dispatchEvent(new Event("resize"));
         });
     }
 }
