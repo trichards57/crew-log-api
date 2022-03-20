@@ -1,6 +1,8 @@
 ﻿@using System.Security.Claims;
+@using Microsoft.AspNetCore.Identity;
 
 @inject UserManager<User> userManager;
+@inject SignInManager<User> signInManager;
 
 @{
     Layout = null;
@@ -9,9 +11,11 @@
     var twoFactorEnabled = await userManager.GetTwoFactorEnabledAsync(user);
     var emailConfirmed = await userManager.IsEmailConfirmedAsync(user);
     var recoveryCodesLeft = await userManager.CountRecoveryCodesAsync(user);
+    var deviceRemembered = await signInManager.IsTwoFactorClientRememberedAsync(user);
 
     var showConfirmedAlert = Context.Request.Query["state"] == "confirm-sent";
     var showConfirmErrorAlert = Context.Request.Query["state"] == "confirm-error";
+    var showForgetDeviceAlert = Context.Request.Query["state"] == "forget-device";
 }
 
 <!DOCTYPE html>
@@ -166,6 +170,15 @@
                                         <div class="text-center">
                                             <a class="btn btn-primary btn-sm mb-2" asp-page="./GenerateRecoveryCodes">Get New Codes</a>
                                         </div>
+
+                                        @if (deviceRemembered)
+                                        {
+                                            <div class="text-center">
+                                                <form method="post" style="display: inline-block" >
+                                                    <button asp-page="./EnableAuthenticator" asp-page-handler="ForgetClient" type="submit" class="btn btn-secondary btn-sm">Forget This Browser</button>
+                                                </form>
+                                            </div>
+                                        }
                                     }
                                 </div>
                                 <hr class="my-0" />
@@ -204,6 +217,13 @@
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     <i data-feather="check"></i> Couldn't send the confirmation.  Try again later.
+                                </div>
+                            }
+                            @if (showForgetDeviceAlert)
+                            {
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    This device has been forgotten.  You'll need your authenticator next time you log in.
                                 </div>
                             }
                             @RenderBody()

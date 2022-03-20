@@ -17,17 +17,20 @@ namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
     {
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private readonly ILogger<EnableAuthenticatorModel> _logger;
+        private readonly SignInManager<User> _signInManager;
         private readonly UrlEncoder _urlEncoder;
         private readonly UserManager<User> _userManager;
 
         public EnableAuthenticatorModel(
             UserManager<User> userManager,
+            SignInManager<User> signInManager,
             ILogger<EnableAuthenticatorModel> logger,
             UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _signInManager = signInManager;
         }
 
         public string AuthenticatorUri { get; set; }
@@ -94,6 +97,18 @@ namespace CrewLogApi.Areas.Identity.Pages.Account.Manage
             {
                 return RedirectToPage("./Index");
             }
+        }
+
+        public async Task<IActionResult> OnPostForgetClient()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            await _signInManager.ForgetTwoFactorClientAsync();
+            return RedirectToPage("./Index", new { state = "forget-device" });
         }
 
         private static string FormatKey(string unformattedKey)
