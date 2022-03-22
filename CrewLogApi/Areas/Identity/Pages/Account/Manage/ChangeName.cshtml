@@ -1,4 +1,23 @@
 ﻿@page
-@model CrewLogApi.Areas.Identity.Pages.Account.Manage.ChangeNameModel
-@{
+@model ChangeNameModel
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Update Name</h5>
+    </div>
+    <div class="card-body h-100">
+        <form id="email-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Input.NewName" class="form-label"></label>
+                <input asp-for="Input.NewName" class="form-control" autocomplete="email" aria-required="true" />
+                <span asp-validation-for="Input.NewName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Change Name</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
 }
