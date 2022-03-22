@@ -16,6 +16,8 @@
     var showConfirmedAlert = Context.Request.Query["state"] == "confirm-sent";
     var showConfirmErrorAlert = Context.Request.Query["state"] == "confirm-error";
     var showForgetDeviceAlert = Context.Request.Query["state"] == "forget-device";
+    var showNameUpdatedAlert = Context.Request.Query["state"] == "name-updated";
+    var showPasswordChangeAlert = Context.Request.Query["state"] == "password-change";
 }
 
 <!DOCTYPE html>
@@ -106,23 +108,28 @@
                                 </div>
                                 <div class="card-body text-center">
                                     <h5 class="card-title mb-0">@User.FindFirstValue("real_name")</h5>
-                                    <div class="text-muted mb-2">@User.FindFirstValue("email")</div>
-                                    <div>
-                                        <a class="btn btn-primary btn-sm mb-2" asp-page="./ChangeName">Update Name</a>
-                                        <a class="btn btn-primary btn-sm mb-2" asp-page="./Email">Update Email</a>
-                                    </div>
+                                    <div class="text-muted mb-0">@User.FindFirstValue("email")</div>
+
                                     @if (emailConfirmed)
                                     {
-                                        <div class="badge bg-success my-1">Email Confirmed</div>
+                                        <div class="badge bg-success my-2">Email Confirmed</div>
                                     }
                                     else
                                     {
-                                        <div class="badge bg-danger my-1">Not Confirmed</div>
+                                        <div class="badge bg-danger my-2">Not Confirmed</div>
                                         <form method="post">
                                             <input name="NewEmail" type="hidden" value="@User.FindFirstValue("email")" />
                                             <button type="submit" asp-page="./Email" asp-page-handler="SendVerificationEmail" class="btn btn-primary btn-sm mb-2">Send Confirmation Email</button>
                                         </form>
                                     }
+
+                                    <div>
+                                        <a class="btn btn-primary btn-sm mb-2" asp-page="./ChangeName">Update Name</a>
+                                        <a class="btn btn-primary btn-sm mb-2" asp-page="./Email">Update Email</a>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-primary btn-sm mb-2" asp-page="./ChangePassword">Change Password</a>
+                                    </div>
                                 </div>
                                 <hr class="my-0" />
                                 <div class="card-body">
@@ -174,33 +181,12 @@
                                         @if (deviceRemembered)
                                         {
                                             <div class="text-center">
-                                                <form method="post" style="display: inline-block" >
+                                                <form method="post" style="display: inline-block">
                                                     <button asp-page="./EnableAuthenticator" asp-page-handler="ForgetClient" type="submit" class="btn btn-secondary btn-sm">Forget This Browser</button>
                                                 </form>
                                             </div>
                                         }
                                     }
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body">
-                                    <h5 class="h6 card-title">About</h5>
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span> Lives in <a href="#">San Francisco, SA</a></li>
-
-                                        <li class="mb-1"><span data-feather="briefcase" class="feather-sm me-1"></span> Works at <a href="#">GitHub</a></li>
-                                        <li class="mb-1"><span data-feather="map-pin" class="feather-sm me-1"></span> From <a href="#">Boston</a></li>
-                                    </ul>
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body">
-                                    <h5 class="h6 card-title">Elsewhere</h5>
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="mb-1"><a href="#">staciehall.co</a></li>
-                                        <li class="mb-1"><a href="#">Twitter</a></li>
-                                        <li class="mb-1"><a href="#">Facebook</a></li>
-                                        <li class="mb-1"><a href="#">Instagram</a></li>
-                                        <li class="mb-1"><a href="#">LinkedIn</a></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -216,14 +202,28 @@
                             {
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    <i data-feather="check"></i> Couldn't send the confirmation.  Try again later.
+                                    <i data-feather="x"></i> Couldn't send the confirmation.  Try again later.
                                 </div>
                             }
                             @if (showForgetDeviceAlert)
                             {
                                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    This device has been forgotten.  You'll need your authenticator next time you log in.
+                                    <i data-feather="check"></i> This device has been forgotten.  You'll need your authenticator next time you log in.
+                                </div>
+                            }
+                            @if (showNameUpdatedAlert)
+                            {
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    <i data-feather="check"></i> Your name has been updated.
+                                </div>
+                            }
+                            @if (showPasswordChangeAlert)
+                            {
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    <i data-feather="check"></i> Your password has been updated.
                                 </div>
                             }
                             @RenderBody()
@@ -262,6 +262,7 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/jquery%403.5.1"></script>
     <script src="https://unpkg.com/bootstrap%40%5E5.1.3"></script>
     <script src="https://unpkg.com/feather-icons%404.28.0"></script>
     <script src="https://unpkg.com/simplebar%40%5E5.3.6"></script>
