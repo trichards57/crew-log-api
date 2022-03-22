@@ -4,29 +4,30 @@
     ViewData["Title"] = "Delete Personal Data";
 }
 
-<h3>@ViewData["Title"]</h3>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Manage Personal Data</h5>
+    </div>
+    <div class="card-body h-100">
+        <p>
+            Deleting your data will permanently remove your account.  This will
+            be done immediately and your data cannot be recovered.
+        </p>
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-    </p>
-</div>
-
-<div>
-    <form id="delete-user" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if (Model.RequirePassword)
-        {
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                <label asp-for="Input.Password" class="form-label"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-        }
-        <button class="w-100 btn btn-lg btn-danger" type="submit">Delete data and close my account</button>
-    </form>
+        <div>
+            <form id="delete-user" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <button class="w-100 btn btn-lg btn-danger" type="submit">Delete data and close my account</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }

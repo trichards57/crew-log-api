@@ -133,8 +133,8 @@
                                 </div>
                                 <hr class="my-0" />
                                 <div class="card-body">
-                                    <h5 class="h6 card-title">Security</h5>
-                                    <div class="card-text">Two Factor Authentication</div>
+                                    <h5 class="card-title">Security</h5>
+                                    <h6 class="card-text">Two Factor Authentication</h6>
                                     @if (!twoFactorEnabled)
                                     {
                                         <div class="text-center">
@@ -149,7 +149,7 @@
                                         <div class="text-center">
                                             <a class="btn btn-primary btn-sm mb-2" asp-page="./Disable2fa">Disable</a>
                                         </div>
-                                        <div class="card-text">Recovery Codes</div>
+                                        <h6 class="card-text">Recovery Codes</h6>
                                         if (recoveryCodesLeft == 0)
                                         {
                                             <div class="text-danger mb-2">
@@ -187,6 +187,13 @@
                                             </div>
                                         }
                                     }
+                                </div>
+                                <hr class="my-0" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Personal Data</h5>
+                                    <div class="text-center">
+                                        <a class="btn btn-primary btn-sm mb-2" asp-page="./PersonalData">Manage Personal Data</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
